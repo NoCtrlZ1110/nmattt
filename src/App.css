@@ -17,6 +17,7 @@
 
 .ant-layout-content{
   min-height: 75vh!important;
+  padding: 50px;
 }
 
 .ant-card-head-title {

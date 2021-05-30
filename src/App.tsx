@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Switch, Route, useLocation } from 'react-router-dom';
+import { Switch, Route, useLocation, Redirect } from 'react-router-dom';
 import { Layout, Menu, Breadcrumb, Row, Col } from 'antd';
 import {
   UserOutlined,
@@ -34,10 +34,7 @@ const App = () => {
           <Breadcrumb.Item>VNU</Breadcrumb.Item>
           <Breadcrumb.Item>Nguyễn Văn Huy - 18020651</Breadcrumb.Item>
         </Breadcrumb>
-        <Layout
-          className='site-layout-background'
-          style={{ padding: '24px 0' }}
-        >
+        <Layout className='site-layout-background'>
           <Sider className='site-layout-background' width={200}>
             <Menu
               mode='inline'
@@ -75,7 +72,7 @@ const App = () => {
               </SubMenu>
             </Menu>
           </Sider>
-          <Content style={{ padding: '0 24px' }}>
+          <Content style={{ padding: '30px', marginBottom: 30 }}>
             <Switch>
               <Route exact path='/rsa-1' component={RSA} />
               <Route exact path='/rsa-2' component={RSA} />
@@ -86,11 +83,14 @@ const App = () => {
               <Route exact path='/elgamal-3' component={Elgamal} />
               <Route exact path='/elgamal-4' component={Elgamal} />
               <Route exact path='/elliptic-1' component={Elgamal} />
+              <Route path='*'>
+                <Redirect to='/rsa-1' />
+              </Route>
             </Switch>
           </Content>
         </Layout>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>
+      <Footer style={{ textAlign: 'center', marginTop: 50 }}>
         [18020651] - Nguyễn Văn Huy
       </Footer>
     </>

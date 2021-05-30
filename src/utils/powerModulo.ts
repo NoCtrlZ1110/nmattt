@@ -5,7 +5,7 @@ export function PowerModulo(x: number, n: number, m: number) {
   while (n > 0) {
     var b = n & 1;
     n = n >> 1;
-    if (b == 1) {
+    if (b === 1) {
       y = (y * power) % m;
     }
     power = (power * power) % m;

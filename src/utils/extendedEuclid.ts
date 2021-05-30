@@ -8,7 +8,7 @@ export function gcd(a: number, b: number) {
     b = tmp;
   }
 
-  while (b != 0) {
+  while (b !== 0) {
     var r = a % b;
     a = b;
     b = r;
@@ -59,4 +59,26 @@ export function egcd(a: number, b: number) {
 export function mod(x: number, y: number) {
   // x % y = x - y * floor(x / y)
   return x - y * Math.floor(x / y);
+  // console.log(x);
+  // console.log(y);
+  // console.log(Math.floor(x / y));
+  // console.log(Math.floor(new BigNumber(x).dividedBy(y).toNumber()));
+  // console.log(x - y * Math.floor(x / y));
+  // console.log(
+  //   new BigNumber(x)
+  //     .minus(
+  //       new BigNumber(y).multipliedBy(
+  //         Math.floor(new BigNumber(x).dividedBy(y).toNumber())
+  //       )
+  //     )
+  //     .toFixed()
+  // );
+
+  // return new BigNumber(x)
+  //   .minus(
+  //     new BigNumber(y).multipliedBy(
+  //       Math.floor(new BigNumber(x).dividedBy(y).toNumber())
+  //     )
+  //   )
+  //   .toFixed();
 }
