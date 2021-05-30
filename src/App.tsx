@@ -12,8 +12,11 @@ import RSA from './rsa/RSA';
 import Elgamal from './elgamal/Elgamal';
 import ModuloCaculate from './rsa/Modulo';
 import { history } from './history';
-import SignRSA from './rsa/Sign';
-import SignCheckRSA from './rsa/SignCheck';
+import SignRSA from './rsa/SignRSA';
+import SignCheckRSA from './rsa/SignRSACheck';
+import EncryptElgamal from './elgamal/EncryptElgamal';
+import SignElgama from './elgamal/SignElgamal';
+import SignCheckElgamal from './elgamal/SignElgamalCheck';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -83,9 +86,9 @@ const App = () => {
               <Route exact path='/rsa-3' component={SignRSA} />
               <Route exact path='/rsa-4' component={SignCheckRSA} />
               <Route exact path='/elgamal-1' component={Elgamal} />
-              <Route exact path='/elgamal-2' component={Elgamal} />
-              <Route exact path='/elgamal-3' component={Elgamal} />
-              <Route exact path='/elgamal-4' component={Elgamal} />
+              <Route exact path='/elgamal-2' component={EncryptElgamal} />
+              <Route exact path='/elgamal-3' component={SignElgama} />
+              <Route exact path='/elgamal-4' component={SignCheckElgamal} />
               <Route exact path='/elliptic-1' component={Elgamal} />
               <Route path='*' component={DefaultRedirect} />
             </Switch>

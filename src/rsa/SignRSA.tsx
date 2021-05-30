@@ -40,7 +40,7 @@ const SignRSA = () => {
         <b>Ký văn bản X bằng cặp khóa bí mật (d, n)</b>
       </h3>
       <Space>
-        <Button onClick={autoFill}>Auto Fill</Button>
+        <Button onClick={autoFill}>Example (Auto Fill)</Button>
         <Button onClick={reset}>Clear All</Button>
       </Space>
       <hr />

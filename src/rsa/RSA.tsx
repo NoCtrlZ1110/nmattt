@@ -1,6 +1,5 @@
 import { Button, Input, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
-// import { multiply } from '../utils/bigNum';
 import { gcd } from '../utils/extendedEuclid';
 import { BigNumber } from 'bignumber.js';
 import * as bigintCryptoUtils from 'bigint-crypto-utils';
@@ -99,7 +98,7 @@ const RSA = () => {
         <b>Xây dựng hệ mật RSA</b>
       </h3>
       <Space>
-        <Button onClick={autoFill}>Auto Fill</Button>
+        <Button onClick={autoFill}>Example (Auto Fill)</Button>
         <Button onClick={reset}>Clear All</Button>
         <Button
           onClick={() => {
@@ -147,26 +146,27 @@ const RSA = () => {
 
       <Space direction='vertical'>
         <div>
-          <b>Bản rõ x = {x || 'undefined'}</b>
+          <b>Bản rõ x = </b>
+          {x || 'undefined'}
         </div>
         <div>
-          <b>Bản mã y = {y || 'undefined'}</b>
+          <b>Bản mã y = </b>
+          {y || 'undefined'}
         </div>
         <div>
-          <b>p = {p || 'undefined'}</b>
+          <b>p = </b>
+          {p || 'undefined'}
         </div>
         <div>
-          <b>q = {q || 'undefined'}</b>
+          <b>q = </b>
+          {q || 'undefined'}
         </div>
         <div>
-          <b>
-            Khóa công khai (e,n) = ({e || 'undefined'} , {n || 'undefined'})
-          </b>
+          <b>Khóa công khai (e,n) = </b>({e || 'undefined'} , {n || 'undefined'}
+          )
         </div>
         <div>
-          <b>
-            Khóa bí mật (d,n) = ({d || 'undefined'} , {n || 'undefined'})
-          </b>
+          <b>Khóa bí mật (d,n) = </b>({d || 'undefined'} , {n || 'undefined'})
         </div>
       </Space>
       <hr />
