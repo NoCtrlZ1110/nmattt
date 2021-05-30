@@ -1,4 +1,4 @@
-import { Input, Space } from 'antd';
+import { Button, Input, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import * as bigintCryptoUtils from 'bigint-crypto-utils';
 
@@ -6,9 +6,12 @@ const ModuloCaculate = () => {
   const [x, setX] = useState<any>();
   const [y, setY] = useState<any>();
   const [n, setN] = useState<any>();
-  const [e, setE] = useState<any>(65537);
+  const [e, setE] = useState<any>();
 
   useEffect(() => {
+    if (!(x && e && n)) {
+      return;
+    }
     setY(
       bigintCryptoUtils
         .modPow(BigInt(x || 99999), BigInt(e || 99999), BigInt(n || 99999))
@@ -16,12 +19,37 @@ const ModuloCaculate = () => {
     );
   }, [x, e, n]);
 
+  const reset = () => {
+    setE('');
+    setX('');
+    setY('');
+    setN('');
+  };
+
+  const autoFill = () => {
+    setX('123');
+    setE('2753');
+    setN('3233');
+  };
+
   return (
     <div>
       <h3 className='mb-4'>
-        <b>y = x ^ e mod n</b>
+        <b>Tính mũ theo Modulo y = x ^ e mod n</b>
       </h3>
+      <Space>
+        <Button onClick={autoFill}>Auto Fill</Button>
+        <Button onClick={reset}>Clear All</Button>
+      </Space>
+      <hr />
       <Space className='w-100' direction='vertical' size='large'>
+        <Input
+          value={x}
+          onChange={(e) => setX(e.target.value)}
+          addonBefore='x'
+          placeholder='Nhập x'
+          type='number'
+        />
         <Input
           value={e}
           onChange={(e) => setE(e.target.value)}
@@ -29,7 +57,18 @@ const ModuloCaculate = () => {
           placeholder='Nhập e'
           type='number'
         />
+        <Input
+          value={n}
+          onChange={(e) => setN(e.target.value)}
+          addonBefore='n'
+          placeholder='Nhập n'
+          type='number'
+        />
       </Space>
+      <hr />
+      <h3>
+        <b>y = {y || 'undefined'}</b>
+      </h3>
     </div>
   );
 };

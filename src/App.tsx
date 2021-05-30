@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Switch, Route, useLocation, Redirect } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 import { Layout, Menu, Breadcrumb, Row, Col } from 'antd';
 import {
   UserOutlined,
@@ -10,6 +10,10 @@ import './App.css';
 import { Footer } from 'antd/lib/layout/layout';
 import RSA from './rsa/RSA';
 import Elgamal from './elgamal/Elgamal';
+import ModuloCaculate from './rsa/Modulo';
+import { history } from './history';
+import SignRSA from './rsa/Sign';
+import SignCheckRSA from './rsa/SignCheck';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -44,7 +48,7 @@ const App = () => {
               ]}
               style={{ height: '100%' }}
               onSelect={({ item, key, keyPath, selectedKeys, domEvent }) => {
-                window.location.href = '/' + key;
+                history.push('/' + key);
               }}
             >
               <SubMenu key='rsa' icon={<UserOutlined />} title='Hệ mật RSA'>
@@ -75,17 +79,15 @@ const App = () => {
           <Content style={{ padding: '30px', marginBottom: 30 }}>
             <Switch>
               <Route exact path='/rsa-1' component={RSA} />
-              <Route exact path='/rsa-2' component={RSA} />
-              <Route exact path='/rsa-3' component={RSA} />
-              <Route exact path='/rsa-4' component={RSA} />
+              <Route exact path='/rsa-2' component={ModuloCaculate} />
+              <Route exact path='/rsa-3' component={SignRSA} />
+              <Route exact path='/rsa-4' component={SignCheckRSA} />
               <Route exact path='/elgamal-1' component={Elgamal} />
               <Route exact path='/elgamal-2' component={Elgamal} />
               <Route exact path='/elgamal-3' component={Elgamal} />
               <Route exact path='/elgamal-4' component={Elgamal} />
               <Route exact path='/elliptic-1' component={Elgamal} />
-              <Route path='*'>
-                <Redirect to='/rsa-1' />
-              </Route>
+              <Route path='*' component={DefaultRedirect} />
             </Switch>
           </Content>
         </Layout>
@@ -98,3 +100,10 @@ const App = () => {
 };
 
 export default App;
+
+const DefaultRedirect: React.FC = () => {
+  useEffect(() => {
+    window.location.href = '/rsa-1';
+  }, []);
+  return <></>;
+};

@@ -1,4 +1,4 @@
-import { Input, Space } from 'antd';
+import { Button, Input, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 // import { multiply } from '../utils/bigNum';
 import { gcd } from '../utils/extendedEuclid';
@@ -6,12 +6,8 @@ import { BigNumber } from 'bignumber.js';
 import * as bigintCryptoUtils from 'bigint-crypto-utils';
 
 const RSA = () => {
-  const [p, setP] = useState<any>(
-    '60189309855228152582080418108842142489913101192853892029893420328887351871793'
-  );
-  const [q, setQ] = useState<any>(
-    '74714197566136059701452833471216875182865235128709397697022189913844351225357'
-  );
+  const [p, setP] = useState<any>();
+  const [q, setQ] = useState<any>();
   const [m, setM] = useState<any>();
   const [g, setG] = useState<any>();
   const [d, setD] = useState<any>();
@@ -19,9 +15,12 @@ const RSA = () => {
   const [x, setX] = useState<any>();
   const [y, setY] = useState<any>();
   const [n, setN] = useState<any>();
-  const [e, setE] = useState<any>(65537);
+  const [e, setE] = useState<any>();
 
   useEffect(() => {
+    if (!(p && q)) {
+      return;
+    }
     setN(new BigNumber(p).multipliedBy(q).toFixed());
     setM(
       new BigNumber(new BigNumber(p).minus(1))
@@ -31,6 +30,9 @@ const RSA = () => {
   }, [p, q]);
 
   useEffect(() => {
+    if (!(e && m)) {
+      return;
+    }
     setG(gcd(e, m));
     try {
       setD(
@@ -42,26 +44,75 @@ const RSA = () => {
   }, [e, m]);
 
   useEffect(() => {
-    setY(
-      bigintCryptoUtils
-        .modPow(BigInt(x || 99999), BigInt(e || 99999), BigInt(n || 99999))
-        .toString()
-    );
+    if (!(x && e && n)) {
+      return;
+    }
+    try {
+      setY(
+        bigintCryptoUtils
+          .modPow(BigInt(x || 99999), BigInt(e || 99999), BigInt(n || 99999))
+          .toString()
+      );
+    } catch (error) {}
   }, [x, e, n]);
 
   useEffect(() => {
-    setDe(
-      bigintCryptoUtils
-        .modPow(BigInt(y || 99999), BigInt(d || 99999), BigInt(n || 99999))
-        .toString()
-    );
+    if (!(y && d && n)) {
+      return;
+    }
+    try {
+      setDe(
+        bigintCryptoUtils
+          .modPow(BigInt(y || 99999), BigInt(d || 99999), BigInt(n || 99999))
+          .toString()
+      );
+    } catch (error) {}
   }, [y, d, n]);
+
+  const reset = () => {
+    setP('');
+    setQ('');
+    setE('');
+    setX('');
+    setM('');
+    setG('');
+    setD('');
+    setDe('');
+    setY('');
+    setN('');
+  };
+
+  const autoFill = () => {
+    setX('123456789');
+    setP(
+      '60189309855228152582080418108842142489913101192853892029893420328887351871793'
+    );
+    setQ(
+      '74714197566136059701452833471216875182865235128709397697022189913844351225357'
+    );
+    setE(65537);
+  };
 
   return (
     <div>
       <h3 className='mb-4'>
         <b>Xây dựng hệ mật RSA</b>
       </h3>
+      <Space>
+        <Button onClick={autoFill}>Auto Fill</Button>
+        <Button onClick={reset}>Clear All</Button>
+        <Button
+          onClick={() => {
+            window.open(
+              'https://asecuritysite.com/encryption/nprimes?y=256',
+              '_blank'
+            );
+          }}
+        >
+          Generate P,Q
+        </Button>
+      </Space>
+      <hr />
       <Space className='w-100' direction='vertical' size='large'>
         <Input
           value={x}
@@ -93,9 +144,13 @@ const RSA = () => {
         />
       </Space>
       <hr />
+
       <Space direction='vertical'>
         <div>
-          <b>x = {x || 'undefined'}</b>
+          <b>Bản rõ x = {x || 'undefined'}</b>
+        </div>
+        <div>
+          <b>Bản mã y = {y || 'undefined'}</b>
         </div>
         <div>
           <b>p = {p || 'undefined'}</b>
@@ -104,7 +159,14 @@ const RSA = () => {
           <b>q = {q || 'undefined'}</b>
         </div>
         <div>
-          <b>e = {e || 'undefined'}</b>
+          <b>
+            Khóa công khai (e,n) = ({e || 'undefined'} , {n || 'undefined'})
+          </b>
+        </div>
+        <div>
+          <b>
+            Khóa bí mật (d,n) = ({d || 'undefined'} , {n || 'undefined'})
+          </b>
         </div>
       </Space>
       <hr />
@@ -112,45 +174,56 @@ const RSA = () => {
         {p * q > 0 && (
           <div>
             <p>
-              n = p * q = {p} * {q} = {n}
+              <b>n = p * q = </b> {p} * {q} = {n}
             </p>
             <p>
-              m = phi(n) = (p - 1)(q - 1) = {p - 1} * {q - 1} ={' '}
-              {BigInt(m || 0).toString()}
+              <b>m = phi(n) = (p - 1)(q - 1) = </b>
+              {p - 1} * {q - 1} ={BigInt(m || 0).toString()}
             </p>
             <p>
-              gcd(e, m) = <code>{g}</code>
+              <b>gcd(e, m)</b> = <code>{g}</code>
             </p>
             {g !== 1 && (
-              <p className='text-danger'>
-                gcd(e, m) = <code>{g} != 1</code> ==&gt; e được chọn không thỏa
-                mãn !
-              </p>
+              <b className='text-danger'>
+                <b> gcd(e, m) =</b> <code>{g} != 1</code> ==&gt; e được chọn
+                không thỏa mãn !
+              </b>
             )}
             {g === 1 && (
               <div>
                 <p>
-                  Ta nhân thấy e được chọn thỏa mãn <code>gcd(e, m) = 1</code>.
+                  Ta nhân thấy e được chọn thỏa mãn{' '}
+                  <b>
+                    <code>gcd(e, m) = 1</code>
+                  </b>
+                  .
                 </p>
                 <hr />
                 <h4>Bước 1: Thực hiện tính khóa bí mật d</h4>
-                <p>Áp dụng thuật toán Euclid mở rộng, ta có:</p>d = e ^ -1 mod m
-                = {e} ^ -1 mod {m} = {d}
+                <p>Áp dụng thuật toán Euclid mở rộng, ta có:</p>
+                <b>d = e ^ -1 mod m</b>= {e} ^ -1 mod {m} = {d}
                 {!x || x <= 0 ? (
                   <div>
-                    <b className='text-danger'>Hãy nhập x &gt; 0 !!!</b>
+                    <hr />
+                    <h4 className='text-danger'>Hãy nhập x &gt; 0 !!!</h4>
                   </div>
                 ) : (
                   <div>
                     <hr />
                     <h4>Bước 2: Mã hóa bản rõ x = {x}</h4>
                     <p>
-                      y = x ^ e mod n = {x} ^ {e} mod {n} = {y}
+                      <b>y = x ^ e mod n = </b>
+                      {x} ^ {e} mod {n} = {y}
                     </p>
                     <hr />
                     <h4>Bước 3: Giải mã y khi biết d, n</h4>
                     <p>
-                      x = y ^ d mod n = {y} ^{d} mod {n} ={de}
+                      <b>x = y ^ d mod n = </b>
+                      {y} ^{d} mod {n}
+                      <hr />
+                      <h4 className='text-danger'>
+                        <b>x = {de}</b>
+                      </h4>
                     </p>
                   </div>
                 )}
