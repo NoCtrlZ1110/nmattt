@@ -5,12 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import { history } from './history';
-import { Router } from 'react-router-dom';
+// import { history } from './history';
+import { HashRouter as Router } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router history={history}>
+    <Router>
       <App />
     </Router>
   </React.StrictMode>,

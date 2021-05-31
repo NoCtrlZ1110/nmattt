@@ -18,7 +18,9 @@ const SignRSA = () => {
           .modPow(BigInt(x || 99999), BigInt(d || 99999), BigInt(n || 99999))
           .toString()
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [x, d, n]);
 
   const reset = () => {

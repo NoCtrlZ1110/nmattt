@@ -20,7 +20,9 @@ const SignCheckRSA = () => {
         .toString();
       setResult(_result);
       setCheck(_result === x.toString());
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [x, e, n, s]);
 
   const reset = () => {

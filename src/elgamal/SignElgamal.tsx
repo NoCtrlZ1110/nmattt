@@ -46,7 +46,9 @@ const SignElgama = () => {
           )
           .toString()
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [alpha, a, p]);
 
   useEffect(() => {
@@ -56,7 +58,9 @@ const SignElgama = () => {
           .modInv(BigInt(k || 99999), BigInt(p - 1 || 99999))
           .toString()
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [k, p]);
 
   useEffect(() => {
@@ -70,13 +74,17 @@ const SignElgama = () => {
           )
           .toString()
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [alpha, k, p]);
 
   useEffect(() => {
     try {
       setED2(mod(x - a * s1, p - 1).toString());
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [a, p, s1, x]);
 
   useEffect(() => {
@@ -88,7 +96,9 @@ const SignElgama = () => {
         ).toString() as any) %
           (p - 1)
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [ed2, k, p]);
 
   return (

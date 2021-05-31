@@ -37,7 +37,9 @@ const EncryptElgamal = () => {
           )
           .toString()
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [alpha, k, p]);
 
   useEffect(() => {

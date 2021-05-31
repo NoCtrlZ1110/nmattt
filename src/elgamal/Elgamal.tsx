@@ -42,7 +42,9 @@ const Elgamal = () => {
           )
           .toString()
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [alpha, a, p]);
 
   useEffect(() => {
@@ -56,7 +58,9 @@ const Elgamal = () => {
           )
           .toString()
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [alpha, k, p]);
 
   useEffect(() => {
@@ -83,13 +87,17 @@ const Elgamal = () => {
           )
           .toString()
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [gamma, p, a]);
 
   useEffect(() => {
     try {
       setX2(mod(gamma2 * delta, p));
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [gamma2, delta, p]);
 
   return (

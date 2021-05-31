@@ -33,7 +33,9 @@ const SignCheckElgamal = () => {
           p
         ).toString()
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [beta, p, s1, s2]);
 
   useEffect(() => {
@@ -47,7 +49,9 @@ const SignCheckElgamal = () => {
           )
           .toString()
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [alpha, p, x]);
 
   useEffect(() => {

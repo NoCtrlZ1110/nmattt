@@ -39,7 +39,9 @@ const RSA = () => {
           .modInv(BigInt(e || 99999), BigInt(m || 99999))
           .toString()
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [e, m]);
 
   useEffect(() => {
@@ -52,7 +54,9 @@ const RSA = () => {
           .modPow(BigInt(x || 99999), BigInt(e || 99999), BigInt(n || 99999))
           .toString()
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [x, e, n]);
 
   useEffect(() => {
@@ -65,7 +69,9 @@ const RSA = () => {
           .modPow(BigInt(y || 99999), BigInt(d || 99999), BigInt(n || 99999))
           .toString()
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [y, d, n]);
 
   const reset = () => {
