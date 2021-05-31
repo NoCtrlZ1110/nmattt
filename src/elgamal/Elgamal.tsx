@@ -1,7 +1,8 @@
 import { Button, Input, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
-import * as bigintCryptoUtils from 'bigint-crypto-utils';
-import { mod } from '../utils/extendedEuclid';
+// import * as bigintCryptoUtils from 'bigint-crypto-utils';
+// import { mod } from '../utils/extendedEuclid';
+import bigInt from 'big-integer';
 
 const Elgamal = () => {
   const [x, setX] = useState<any>();
@@ -32,72 +33,51 @@ const Elgamal = () => {
   };
 
   useEffect(() => {
-    try {
-      setBeta(
-        bigintCryptoUtils
-          .modPow(
-            BigInt(alpha || 99999),
-            BigInt(a || 99999),
-            BigInt(p || 99999)
-          )
-          .toString()
-      );
-    } catch (error) {
-      console.log(error);
+    if (!(alpha && a && p)) {
+      return;
     }
+    setBeta(bigInt(alpha).modPow(a, p).toString());
+    
   }, [alpha, a, p]);
 
   useEffect(() => {
-    try {
-      setGamma(
-        bigintCryptoUtils
-          .modPow(
-            BigInt(alpha || 99999),
-            BigInt(k || 99999),
-            BigInt(p || 99999)
-          )
-          .toString()
-      );
-    } catch (error) {
-      console.log(error);
+    if (!(alpha && k && p)) {
+      return;
     }
+    setGamma(bigInt(alpha).modPow(k, p).toString());
+   
   }, [alpha, k, p]);
 
   useEffect(() => {
-    setDelta(
-      (x *
-        (bigintCryptoUtils
-          .modPow(BigInt(beta || 99999), BigInt(k || 99999), BigInt(p || 99999))
-          .toString() as any)) %
-        p
-    );
+    if (!(beta && k && x && p)) {
+      return;
+    }
+    setDelta(bigInt(beta).modPow(k, p).multiply(x).mod(p).toString());
+    
   }, [beta, k, p, x]);
 
   useEffect(() => {
     if (!(gamma & p & a)) {
       return;
     }
-    try {
-      setGamma2(
-        bigintCryptoUtils
-          .modPow(
-            BigInt(gamma || 99999),
-            BigInt(p - a - 1 || 99999),
-            BigInt(p || 99999)
-          )
-          .toString()
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    setGamma2(
+      bigInt(gamma)
+        .modPow(p - a - 1, p)
+        .toString()
+    );
+    
   }, [gamma, p, a]);
 
   useEffect(() => {
-    try {
-      setX2(mod(gamma2 * delta, p));
-    } catch (error) {
-      console.log(error);
+    if (!(gamma2 && delta && p)) {
+      return;
     }
+    setX2(
+      bigInt(gamma2 * delta)
+        .mod(p)
+        .toString()
+    );
+    
   }, [gamma2, delta, p]);
 
   return (

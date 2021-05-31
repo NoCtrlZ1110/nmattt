@@ -1,6 +1,6 @@
 import { Button, Input, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
-import * as bigintCryptoUtils from 'bigint-crypto-utils';
+import bigInt from 'big-integer';
 
 const ModuloCaculate = () => {
   const [x, setX] = useState<any>();
@@ -12,11 +12,7 @@ const ModuloCaculate = () => {
     if (!(x && e && n)) {
       return;
     }
-    setY(
-      bigintCryptoUtils
-        .modPow(BigInt(x || 99999), BigInt(e || 99999), BigInt(n || 99999))
-        .toString()
-    );
+    setY(bigInt(x).modPow(e, n).toString());
   }, [x, e, n]);
 
   const reset = () => {

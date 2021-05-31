@@ -2,7 +2,9 @@ import { Button, Input, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { gcd } from '../utils/extendedEuclid';
 import { BigNumber } from 'bignumber.js';
-import * as bigintCryptoUtils from 'bigint-crypto-utils';
+// import * as bigintCryptoUtils from 'bigint-crypto-utils';
+// import * as bigintModArith from 'bigint-mod-arith';
+import bigInt from 'big-integer';
 
 const RSA = () => {
   const [p, setP] = useState<any>();
@@ -33,45 +35,21 @@ const RSA = () => {
       return;
     }
     setG(gcd(e, m));
-    try {
-      setD(
-        bigintCryptoUtils
-          .modInv(BigInt(e || 99999), BigInt(m || 99999))
-          .toString()
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    setD(bigInt(e).modInv(m).toString());
   }, [e, m]);
 
   useEffect(() => {
     if (!(x && e && n)) {
       return;
     }
-    try {
-      setY(
-        bigintCryptoUtils
-          .modPow(BigInt(x || 99999), BigInt(e || 99999), BigInt(n || 99999))
-          .toString()
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    setY(bigInt(x).modPow(e, n).toString());
   }, [x, e, n]);
 
   useEffect(() => {
     if (!(y && d && n)) {
       return;
     }
-    try {
-      setDe(
-        bigintCryptoUtils
-          .modPow(BigInt(y || 99999), BigInt(d || 99999), BigInt(n || 99999))
-          .toString()
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    setDe(bigInt(y).modPow(d, n).toString());
   }, [y, d, n]);
 
   const reset = () => {

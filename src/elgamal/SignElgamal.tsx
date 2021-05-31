@@ -1,7 +1,7 @@
 import { Button, Input, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
-import * as bigintCryptoUtils from 'bigint-crypto-utils';
 import { mod } from '../utils/extendedEuclid';
+import bigInt from 'big-integer';
 
 const SignElgama = () => {
   const [x, setX] = useState<any>();
@@ -36,69 +36,59 @@ const SignElgama = () => {
   };
 
   useEffect(() => {
-    try {
-      setBeta(
-        bigintCryptoUtils
-          .modPow(
-            BigInt(alpha || 99999),
-            BigInt(a || 99999),
-            BigInt(p || 99999)
-          )
-          .toString()
-      );
-    } catch (error) {
-      console.log(error);
+    if (!(alpha && a && p)) {
+      return;
     }
+    setBeta(bigInt(alpha).modPow(a, p).toString());
   }, [alpha, a, p]);
 
   useEffect(() => {
-    try {
-      setED(
-        bigintCryptoUtils
-          .modInv(BigInt(k || 99999), BigInt(p - 1 || 99999))
-          .toString()
-      );
-    } catch (error) {
-      console.log(error);
+    if (!(k && p)) {
+      return;
     }
+    setED(
+      bigInt(k)
+        .modInv(p - 1)
+        .toString()
+    );
   }, [k, p]);
 
   useEffect(() => {
-    try {
-      setS1(
-        bigintCryptoUtils
-          .modPow(
-            BigInt(alpha || 99999),
-            BigInt(k || 99999),
-            BigInt(p || 99999)
-          )
-          .toString()
-      );
-    } catch (error) {
-      console.log(error);
+    if (!(alpha && k && p)) {
+      return;
     }
+    setS1(bigInt(alpha).modPow(k, p).toString());
   }, [alpha, k, p]);
 
   useEffect(() => {
-    try {
-      setED2(mod(x - a * s1, p - 1).toString());
-    } catch (error) {
-      console.log(error);
+    if (!(x && a && s1 && p)) {
+      return;
     }
+
+    console.log(x - a * s1);
+    console.log(p - 1);
+    console.log(mod(x - a * s1, p - 1).toString());
+
+    console.log(
+      bigInt(x - a * s1)
+        .mod(p - 1)
+        .toString()
+    );
+
+    setED2(mod(x - a * s1, p - 1).toString());
   }, [a, p, s1, x]);
 
   useEffect(() => {
-    try {
-      setS2(
-        ((
-          BigInt(ed2 || 99999) *
-          bigintCryptoUtils.modInv(BigInt(k || 99999), BigInt(p - 1 || 99999))
-        ).toString() as any) %
-          (p - 1)
-      );
-    } catch (error) {
-      console.log(error);
+    if (!(ed2 && k && p)) {
+      return;
     }
+    setS2(
+      bigInt(k)
+        .modInv(p - 1)
+        .multiply(ed2)
+        .mod(p - 1)
+        .toString()
+    );
   }, [ed2, k, p]);
 
   return (

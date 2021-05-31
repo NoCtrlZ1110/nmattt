@@ -1,7 +1,6 @@
 import { Button, Input, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
-import * as bigintCryptoUtils from 'bigint-crypto-utils';
-import { mod } from '../utils/extendedEuclid';
+import bigInt from 'big-integer';
 
 const SignCheckElgamal = () => {
   const [x, setX] = useState<any>();
@@ -15,46 +14,29 @@ const SignCheckElgamal = () => {
   const [check, setCheck] = useState<boolean>(false);
 
   useEffect(() => {
-    try {
-      setVT(
-        mod(
-          (
-            bigintCryptoUtils.modPow(
-              BigInt(beta || 99999),
-              BigInt(s1 || 99999),
-              BigInt(p || 99999)
-            ) *
-            bigintCryptoUtils.modPow(
-              BigInt(s1 || 99999),
-              BigInt(s2 || 99999),
-              BigInt(p || 99999)
-            )
-          ).toString() as any,
-          p
-        ).toString()
-      );
-    } catch (error) {
-      console.log(error);
+    if (!(beta && p && s1 && s2)) {
+      return;
     }
+    setVT(
+      bigInt(beta)
+        .modPow(s1, p)
+        .multiply(bigInt(s1).modPow(s2, p))
+        .mod(p)
+        .toString()
+    );
   }, [beta, p, s1, s2]);
 
   useEffect(() => {
-    try {
-      setVP(
-        bigintCryptoUtils
-          .modPow(
-            BigInt(alpha || 99999),
-            BigInt(x || 99999),
-            BigInt(p || 99999)
-          )
-          .toString()
-      );
-    } catch (error) {
-      console.log(error);
+    if (!(alpha && p && x)) {
+      return;
     }
+    setVP(bigInt(alpha).modPow(x, p).toString());
   }, [alpha, p, x]);
 
   useEffect(() => {
+    if (!(VP && VT)) {
+      return;
+    }
     setCheck(VT === VP);
   }, [VP, VT]);
 

@@ -1,6 +1,6 @@
 import { Button, Input, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
-import * as bigintCryptoUtils from 'bigint-crypto-utils';
+import bigInt from 'big-integer';
 
 const SignRSA = () => {
   const [x, setX] = useState<any>();
@@ -12,15 +12,7 @@ const SignRSA = () => {
     if (!(x && d && n)) {
       return;
     }
-    try {
-      setS(
-        bigintCryptoUtils
-          .modPow(BigInt(x || 99999), BigInt(d || 99999), BigInt(n || 99999))
-          .toString()
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    setS(bigInt(x).modPow(d, n).toString());
   }, [x, d, n]);
 
   const reset = () => {

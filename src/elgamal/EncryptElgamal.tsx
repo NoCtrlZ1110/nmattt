@@ -1,6 +1,6 @@
 import { Button, Input, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
-import * as bigintCryptoUtils from 'bigint-crypto-utils';
+import bigInt from 'big-integer';
 
 const EncryptElgamal = () => {
   const [x, setX] = useState<any>();
@@ -27,28 +27,17 @@ const EncryptElgamal = () => {
   };
 
   useEffect(() => {
-    try {
-      setGamma(
-        bigintCryptoUtils
-          .modPow(
-            BigInt(alpha || 99999),
-            BigInt(k || 99999),
-            BigInt(p || 99999)
-          )
-          .toString()
-      );
-    } catch (error) {
-      console.log(error);
+    if (!(alpha && k && p)) {
+      return;
     }
+    setGamma(bigInt(alpha).modPow(k, p).toString());
   }, [alpha, k, p]);
 
   useEffect(() => {
-    setDelta(
-      x *
-        (bigintCryptoUtils
-          .modPow(BigInt(beta || 99999), BigInt(k || 99999), BigInt(p || 99999))
-          .toString() as any)
-    );
+    if (!(beta && k && p && x)) {
+      return;
+    }
+    setDelta(bigInt(beta).modPow(k, p).multiply(x).toString());
   }, [beta, k, p, x]);
 
   return (

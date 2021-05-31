@@ -22,8 +22,6 @@ const { Header, Content, Sider } = Layout;
 
 const App = () => {
   const location = useLocation();
-  useEffect(() => {}, []);
-
   return (
     <>
       <Header className='header text-white justify-content-between'>
@@ -44,10 +42,8 @@ const App = () => {
           <Sider className='site-layout-background' width={200}>
             <Menu
               mode='inline'
-              defaultSelectedKeys={[location.pathname.replaceAll('/', '')]}
-              defaultOpenKeys={[
-                location.pathname.replaceAll('/', '').slice(0, -2),
-              ]}
+              defaultSelectedKeys={[location.pathname.split('/')[1]]}
+              defaultOpenKeys={[location.pathname.split('/')[1]?.slice(0, -2)]}
               style={{ height: '100%' }}
               onSelect={({ key }) => {
                 window.location.href = '/#/' + key;

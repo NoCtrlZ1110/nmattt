@@ -1,6 +1,7 @@
 import { Button, Input, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
-import * as bigintCryptoUtils from 'bigint-crypto-utils';
+// import * as bigintCryptoUtils from 'bigint-crypto-utils';
+import bigInt from 'big-integer';
 
 const SignCheckRSA = () => {
   const [x, setX] = useState<any>();
@@ -14,15 +15,9 @@ const SignCheckRSA = () => {
     if (!(s && e && n)) {
       return;
     }
-    try {
-      let _result = bigintCryptoUtils
-        .modPow(BigInt(s || 99999), BigInt(e || 99999), BigInt(n || 99999))
-        .toString();
-      setResult(_result);
-      setCheck(_result === x.toString());
-    } catch (error) {
-      console.log(error);
-    }
+    let _result = bigInt(s).modPow(e, n).toString();
+    setResult(_result);
+    setCheck(_result === x.toString());
   }, [x, e, n, s]);
 
   const reset = () => {

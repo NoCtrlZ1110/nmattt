@@ -1,4 +1,4 @@
-export function PowerModulo(x: number, n: number, m: number) {
+export function PowerModulo(x: any, n: any, m: any) {
   // Tính: y = x ^ n mod m
   var y = 1;
   var power = x % m;
