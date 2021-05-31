@@ -42,8 +42,13 @@ const App = () => {
           <Sider className='site-layout-background' width={200}>
             <Menu
               mode='inline'
-              defaultSelectedKeys={[location.pathname.split('/')[1]]}
-              defaultOpenKeys={[location.pathname.split('/')[1]?.slice(0, -2)]}
+              defaultSelectedKeys={[location.pathname.split('/')[1] || 'rsa-1']}
+              defaultOpenKeys={[
+                // location.pathname.split('/')[1]?.slice(0, -2) || 'rsa',
+                'rsa',
+                'elgamal',
+                'elliptic',
+              ]}
               style={{ height: '100%' }}
               onSelect={({ key }) => {
                 window.location.href = '/#/' + key;
