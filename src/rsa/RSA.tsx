@@ -22,34 +22,50 @@ const RSA = () => {
     if (!(p && q)) {
       return;
     }
-    setN(new BigNumber(p).multipliedBy(q).toFixed());
-    setM(
-      new BigNumber(new BigNumber(p).minus(1))
-        .multipliedBy(new BigNumber(q).minus(1))
-        .toFixed()
-    );
+    try {
+      setN(new BigNumber(p).multipliedBy(q).toFixed());
+      setM(
+        new BigNumber(new BigNumber(p).minus(1))
+          .multipliedBy(new BigNumber(q).minus(1))
+          .toFixed()
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }, [p, q]);
 
   useEffect(() => {
     if (!(e && m)) {
       return;
     }
-    setG(gcd(e, m));
-    setD(bigInt(e).modInv(m).toString());
+    try {
+      setG(gcd(e, m));
+      setD(bigInt(e).modInv(m).toString());
+    } catch (error) {
+      console.log(error);
+    }
   }, [e, m]);
 
   useEffect(() => {
     if (!(x && e && n)) {
       return;
     }
-    setY(bigInt(x).modPow(e, n).toString());
+    try {
+      setY(bigInt(x).modPow(e, n).toString());
+    } catch (error) {
+      console.log(error);
+    }
   }, [x, e, n]);
 
   useEffect(() => {
     if (!(y && d && n)) {
       return;
     }
-    setDe(bigInt(y).modPow(d, n).toString());
+    try {
+      setDe(bigInt(y).modPow(d, n).toString());
+    } catch (error) {
+      console.log(error);
+    }
   }, [y, d, n]);
 
   const reset = () => {

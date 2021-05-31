@@ -37,7 +37,13 @@ const EncryptElgamal = () => {
     if (!(beta && k && p && x)) {
       return;
     }
-    setDelta(bigInt(beta).modPow(k, p).multiply(x).toString());
+    setDelta(
+      bigInt(beta)
+        .modPow(k, p)
+        .multiply(bigInt(x).modPow(1, p))
+        .modPow(1, p)
+        .toString()
+    );
   }, [beta, k, p, x]);
 
   return (

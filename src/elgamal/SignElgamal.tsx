@@ -46,49 +46,47 @@ const SignElgama = () => {
     if (!(k && p)) {
       return;
     }
-    setED(
-      bigInt(k)
-        .modInv(p - 1)
-        .toString()
-    );
+
+    try {
+      setED(
+        bigInt(k)
+          .modInv(p - 1)
+          .toString()
+      );
+    } catch (error) {}
   }, [k, p]);
 
   useEffect(() => {
     if (!(alpha && k && p)) {
       return;
     }
-    setS1(bigInt(alpha).modPow(k, p).toString());
+    try {
+      setS1(bigInt(alpha).modPow(k, p).toString());
+    } catch (error) {}
   }, [alpha, k, p]);
 
   useEffect(() => {
     if (!(x && a && s1 && p)) {
       return;
     }
-
-    console.log(x - a * s1);
-    console.log(p - 1);
-    console.log(mod(x - a * s1, p - 1).toString());
-
-    console.log(
-      bigInt(x - a * s1)
-        .mod(p - 1)
-        .toString()
-    );
-
-    setED2(mod(x - a * s1, p - 1).toString());
+    try {
+      setED2(mod(x - a * s1, p - 1).toString());
+    } catch (error) {}
   }, [a, p, s1, x]);
 
   useEffect(() => {
     if (!(ed2 && k && p)) {
       return;
     }
-    setS2(
-      bigInt(k)
-        .modInv(p - 1)
-        .multiply(ed2)
-        .mod(p - 1)
-        .toString()
-    );
+    try {
+      setS2(
+        bigInt(k)
+          .modInv(p - 1)
+          .multiply(ed2)
+          .mod(p - 1)
+          .toString()
+      );
+    } catch (error) {}
   }, [ed2, k, p]);
 
   return (

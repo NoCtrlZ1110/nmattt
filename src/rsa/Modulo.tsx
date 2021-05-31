@@ -12,7 +12,11 @@ const ModuloCaculate = () => {
     if (!(x && e && n)) {
       return;
     }
-    setY(bigInt(x).modPow(e, n).toString());
+    try {
+      setY(bigInt(x).modPow(e, n).toString());
+    } catch (error) {
+      console.log(error);
+    }
   }, [x, e, n]);
 
   const reset = () => {

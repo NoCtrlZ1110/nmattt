@@ -36,48 +36,63 @@ const Elgamal = () => {
     if (!(alpha && a && p)) {
       return;
     }
-    setBeta(bigInt(alpha).modPow(a, p).toString());
-    
+    try {
+      setBeta(bigInt(alpha).modPow(a, p).toString());
+    } catch (error) {
+      console.log(error);
+    }
   }, [alpha, a, p]);
 
   useEffect(() => {
     if (!(alpha && k && p)) {
       return;
     }
-    setGamma(bigInt(alpha).modPow(k, p).toString());
-   
+    try {
+      setGamma(bigInt(alpha).modPow(k, p).toString());
+    } catch (error) {
+      console.log(error);
+    }
   }, [alpha, k, p]);
 
   useEffect(() => {
     if (!(beta && k && x && p)) {
       return;
     }
-    setDelta(bigInt(beta).modPow(k, p).multiply(x).mod(p).toString());
-    
+    try {
+      setDelta(bigInt(beta).modPow(k, p).multiply(x).mod(p).toString());
+    } catch (error) {
+      console.log(error);
+    }
   }, [beta, k, p, x]);
 
   useEffect(() => {
     if (!(gamma & p & a)) {
       return;
     }
-    setGamma2(
-      bigInt(gamma)
-        .modPow(p - a - 1, p)
-        .toString()
-    );
-    
+    try {
+      setGamma2(
+        bigInt(gamma)
+          .modPow(p - a - 1, p)
+          .toString()
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }, [gamma, p, a]);
 
   useEffect(() => {
     if (!(gamma2 && delta && p)) {
       return;
     }
-    setX2(
-      bigInt(gamma2 * delta)
-        .mod(p)
-        .toString()
-    );
-    
+    try {
+      setX2(
+        bigInt(gamma2 * delta)
+          .mod(p)
+          .toString()
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }, [gamma2, delta, p]);
 
   return (

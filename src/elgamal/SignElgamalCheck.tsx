@@ -17,27 +17,39 @@ const SignCheckElgamal = () => {
     if (!(beta && p && s1 && s2)) {
       return;
     }
-    setVT(
-      bigInt(beta)
-        .modPow(s1, p)
-        .multiply(bigInt(s1).modPow(s2, p))
-        .mod(p)
-        .toString()
-    );
+    try {
+      setVT(
+        bigInt(beta)
+          .modPow(s1, p)
+          .multiply(bigInt(s1).modPow(s2, p))
+          .mod(p)
+          .toString()
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }, [beta, p, s1, s2]);
 
   useEffect(() => {
     if (!(alpha && p && x)) {
       return;
     }
-    setVP(bigInt(alpha).modPow(x, p).toString());
+    try {
+      setVP(bigInt(alpha).modPow(x, p).toString());
+    } catch (error) {
+      console.log(error);
+    }
   }, [alpha, p, x]);
 
   useEffect(() => {
     if (!(VP && VT)) {
       return;
     }
-    setCheck(VT === VP);
+    try {
+      setCheck(VT === VP);
+    } catch (error) {
+      console.log(error);
+    }
   }, [VP, VT]);
 
   const reset = () => {

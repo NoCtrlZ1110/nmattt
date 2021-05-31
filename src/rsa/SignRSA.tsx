@@ -12,7 +12,11 @@ const SignRSA = () => {
     if (!(x && d && n)) {
       return;
     }
-    setS(bigInt(x).modPow(d, n).toString());
+    try {
+      setS(bigInt(x).modPow(d, n).toString());
+    } catch (error) {
+      console.log(error);
+    }
   }, [x, d, n]);
 
   const reset = () => {

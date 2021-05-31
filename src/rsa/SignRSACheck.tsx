@@ -15,9 +15,13 @@ const SignCheckRSA = () => {
     if (!(s && e && n)) {
       return;
     }
-    let _result = bigInt(s).modPow(e, n).toString();
-    setResult(_result);
-    setCheck(_result === x.toString());
+    try {
+      let _result = bigInt(s).modPow(e, n).toString();
+      setResult(_result);
+      setCheck(_result === x.toString());
+    } catch (error) {
+      console.log(error);
+    }
   }, [x, e, n, s]);
 
   const reset = () => {
