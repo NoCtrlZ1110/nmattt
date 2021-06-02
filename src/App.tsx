@@ -16,6 +16,7 @@ import SignCheckRSA from './rsa/SignRSACheck';
 import EncryptElgamal from './elgamal/EncryptElgamal';
 import SignElgama from './elgamal/SignElgamal';
 import SignCheckElgamal from './elgamal/SignElgamalCheck';
+import Elliptic from './elliptic/Elliptic';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -89,7 +90,7 @@ const App = () => {
               <Route path='/elgamal-2' component={EncryptElgamal} />
               <Route path='/elgamal-3' component={SignElgama} />
               <Route path='/elgamal-4' component={SignCheckElgamal} />
-              <Route path='/elliptic-1' component={Elgamal} />
+              <Route path='/elliptic-1' component={Elliptic} />
               <Route path='*' component={DefaultRedirect} />
             </Switch>
           </Content>
