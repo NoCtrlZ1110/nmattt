@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb, Row, Col } from 'antd';
+import { Layout, Menu, Breadcrumb, Row } from 'antd';
 import {
   UserOutlined,
   LaptopOutlined,
   NotificationOutlined,
 } from '@ant-design/icons';
 import './App.css';
-import { Footer } from 'antd/lib/layout/layout';
 import RSA from './rsa/RSA';
 import Elgamal from './elgamal/Elgamal';
 import ModuloCaculate from './rsa/Modulo';
@@ -27,10 +26,15 @@ const App = () => {
     <>
       <Header className='header text-white justify-content-between'>
         <Row>
-          <Col span={16}>
+          <div className='mr-auto'>
             <>NHẬP MÔN AN TOÀN THÔNG TIN</>
-          </Col>
-          <Col span={8} className='text-center'></Col>
+          </div>
+          <a
+            className='text-white'
+            href='https://github.com/NoCtrlZ1110/nmattt/'
+          >
+            Github / Source code
+          </a>
         </Row>
       </Header>
       <Content style={{ padding: '0 50px' }}>
@@ -96,9 +100,9 @@ const App = () => {
           </Content>
         </Layout>
       </Content>
-      <Footer style={{ textAlign: 'center', marginTop: 50 }}>
+      {/* <Footer style={{ textAlign: 'center', marginTop: 50 }}>
         [18020651] - Nguyễn Văn Huy
-      </Footer>
+      </Footer> */}
     </>
   );
 };

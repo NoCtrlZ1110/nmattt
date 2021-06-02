@@ -1,5 +1,5 @@
 // euclid algorithm
-export function gcd(a: number, b: number) {
+export function gcd(a: any, b: any) {
   a = a || 0;
   b = b || 0;
   if (a < b) {
