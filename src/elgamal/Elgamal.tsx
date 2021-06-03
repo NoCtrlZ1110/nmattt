@@ -2,7 +2,7 @@ import { Button, Input, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 // import * as bigintCryptoUtils from 'bigint-crypto-utils';
 // import { mod } from '../utils/extendedEuclid';
-import bigInt from 'big-integer';
+import bigInt, { gcd } from 'big-integer';
 
 const Elgamal = () => {
   const [x, setX] = useState<any>();
@@ -25,6 +25,11 @@ const Elgamal = () => {
   };
 
   const autoFill = () => {
+    // setX('134542481841787419');
+    // setP('1000000000000000009');
+    // setA('654789123257');
+    // setK('7531594862');
+    // setAlpha('7');
     setX('2035');
     setP('2357');
     setA('1751');
@@ -172,36 +177,51 @@ const Elgamal = () => {
         <p>Mã khóa bí mật = (a) = ({a})</p>
       </div>
       <hr />
-      <div>
-        <h4>
-          <b>Lập mã</b>
-        </h4>
-        <p>
-          γ = a^k mod p = {a} ^ {k} mod {p} = {gamma}
-        </p>
-        <p>
-          δ = x * β ^ K mod p = {x} * {beta} ^ {k} mod {p} = {delta}
-        </p>
-        <p>
-          Nhận được bản mã (γ,δ) = ({gamma} , {delta})
-        </p>
-      </div>
-      <hr />
-      <div>
-        <h4>
-          <b>Giải mã</b>
-        </h4>
-        <p>
-          y ^ -a mod p = γ^(p-1-a) mod p = γ ^ (p-a-1) mod p = {gamma} ^ ({p}-
-          {a}-1) mod {p} = {gamma2}
-        </p>
-        <b>
-          <p>x = γ ^ (-a) * δ = {x2}</p>
-        </b>
-        <h4 className='text-danger'>
-          <b>x = {x2}</b>
-        </h4>
-      </div>
+      {k && (
+        <>
+          {gcd(k, p - 1).toString() !== '1' ? (
+            <h4>
+              <b>
+                Không thỏa mãn tính khả nghịch: gcd(k, p - 1) = gcd({k}, {p - 1}
+                ) ={gcd(k, p - 1).toString()}
+              </b>
+            </h4>
+          ) : (
+            <div>
+              <div>
+                <h4>
+                  <b>Lập mã</b>
+                </h4>
+                <p>
+                  γ = a^k mod p = {a} ^ {k} mod {p} = {gamma}
+                </p>
+                <p>
+                  δ = x * β ^ K mod p = {x} * {beta} ^ {k} mod {p} = {delta}
+                </p>
+                <p>
+                  Nhận được bản mã (γ,δ) = ({gamma} , {delta})
+                </p>
+              </div>
+              <hr />
+              <div>
+                <h4>
+                  <b>Giải mã</b>
+                </h4>
+                <p>
+                  y ^ -a mod p = γ^(p-1-a) mod p = γ ^ (p-a-1) mod p = {gamma} ^
+                  ({p}-{a}-1) mod {p} = {gamma2}
+                </p>
+                <b>
+                  <p>x = γ ^ (-a) * δ = {x2}</p>
+                </b>
+                <h4 className='text-danger'>
+                  <b>x = {x2}</b>
+                </h4>
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 };

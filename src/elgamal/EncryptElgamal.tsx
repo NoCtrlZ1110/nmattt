@@ -19,11 +19,11 @@ const EncryptElgamal = () => {
   };
 
   const autoFill = () => {
-    setX('2035');
-    setP('2357');
-    setK('1523');
-    setAlpha('2');
-    setBeta('1185');
+    setX('134542481841787419');
+    setP('1000000000000000009');
+    setK('7531594862');
+    setAlpha('7');
+    setBeta('609914260072147340');
   };
 
   useEffect(() => {
